@@ -220,7 +220,7 @@ class PicoScopeDriver(ScopeDriver):
         timebase = 65  # Approx 1us interval (1MS/s)
 
         ps.ps5000aRunBlock(
-            self.chandle, num_samples, num_samples, timebase, 0, None, 0, None, None
+            self.chandle, num_samples, num_samples, timebase, None, 0, None, None
         )
 
         # Wait
