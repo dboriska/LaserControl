@@ -1,0 +1,30 @@
+[general]
+last_working_directory = ""
+default_file_prefix = "scan"
+auto_save_enabled = true
+
+[instruments.laser]
+# Index of the preset to use by default
+last_used_index = 0
+
+# List of available laser configurations
+[[instruments.laser.presets]]
+name = "Santec TSL-550 (GPIB)"
+interface = "GPIB"
+address = "GPIB0::10::INSTR"
+
+[[instruments.laser.presets]]
+name = "Santec Remote (LAN)"
+interface = "LAN"
+ip = "192.168.31.10"
+port = 5000
+
+[instruments.scope]
+model = "PS5000A"
+resolution_bits = 12
+# Default channels to enable
+channels = ["A", "B"]
+
+[ui]
+theme = "dark"
+fullscreen_startup = false
