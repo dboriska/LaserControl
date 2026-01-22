@@ -53,10 +53,14 @@ class SweepPlotWidget(QWidget):
         span = len(wavelengths) // 4
 
         # Handle empty
+        # Handle empty
         if len(wavelengths) > 1:
-            self.roi.setRegion((wavelengths[mid - span], wavelengths[mid + span]))
-            self.roi.show()
-            self.update_fit()
+            # self.roi.setRegion((wavelengths[mid - span], wavelengths[mid + span]))
+            # self.roi.show()
+            # self.update_fit()
+            self.lbl_info.setText(
+                "Data Loaded. Transmission Spectrum (Fitting Disabled)."
+            )
 
     def update_fit(self):
         if self.current_wavelengths is None:

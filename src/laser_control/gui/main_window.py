@@ -51,6 +51,16 @@ class MainWindow(QMainWindow):
         action_fullscreen.triggered.connect(self.toggle_fullscreen)
         self.toolbar.addAction(action_fullscreen)
 
+        self.toolbar.addSeparator()
+
+        action_disconnect = QAction("Disconnect", self)
+        action_disconnect.triggered.connect(self.disconnect_instruments)
+        self.toolbar.addAction(action_disconnect)
+
+        action_exit = QAction("Exit", self)
+        action_exit.triggered.connect(self.close)
+        self.toolbar.addAction(action_exit)
+
         # 2. Central Widget (Tabs)
         self.tabs = QTabWidget()
         self.setCentralWidget(self.tabs)
@@ -229,3 +239,24 @@ class MainWindow(QMainWindow):
             self.status.showMessage(f"Saved to: {os.path.basename(final_path)}")
         except Exception as e:
             QMessageBox.warning(self, "Save Error", str(e))
+
+    def disconnect_instruments(self):
+        """Disconnects all instruments and resets UI state."""
+        if hasattr(self, "live_widget"):
+            self.live_widget.toggle_streaming(False)
+            # Disable controls
+            if hasattr(self.live_widget, "laser_controls"):
+                self.live_widget.laser_controls.setEnabled(False)
+
+        if self.engine:
+            if self.engine.laser:
+                self.engine.laser.disconnect()
+            if self.engine.scope:
+                self.engine.scope.disconnect()
+
+        self.status.showMessage("Disconnected")
+
+    def closeEvent(self, event):
+        """Clean shutdown."""
+        self.disconnect_instruments()
+        event.accept()
